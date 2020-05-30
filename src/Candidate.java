@@ -1,25 +1,41 @@
-public class Candidate {
-    private String name;
-    private String surname;
-    private String party;
-    private int district;
+public class Candidate extends Person {
+    private Party party;
     private int position;
     private int[] traits;
     private int votes;
 
-    public Candidate(String name, String surname, String party, int district, int position, int[] traits) {
-        this.name = name;
-        this.surname = surname;
+    public Candidate(String name, String surname, Party party, int position, int[] traits) {
+        super(name, surname);
         this.party = party;
-        this.district = district;
         this.position = position;
         this.traits = traits;
         this.votes = 0;
     }
 
+    public void setPosition(int newPosition) {
+        position = newPosition;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
     public void vote() {
         votes++;
     }
+
+    public void resetVotes() {
+        votes = 0;
+    }
+
+    public int traitValue(int trait) {
+        return traits[trait-1];
+    }
+
 
 
 }
