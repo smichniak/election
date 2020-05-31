@@ -6,6 +6,8 @@ public class WeightedVoter extends ComparingVoter {
         this.weights = weights;
     }
 
+    //TODO
+    //Think about it - max and min voters as weighted voters with only one non-zero weight 1/-1
     @Override
     protected int compare(Candidate candidate1, Candidate candidate2) {
         int weightedMean1 = 0;
@@ -15,6 +17,8 @@ public class WeightedVoter extends ComparingVoter {
             weightedMean1 += weights[i] * candidate1.traitValue(i);
             weightedMean2 += weights[i] * candidate2.traitValue(i);
         }
+        //TODO
+        //Divide mean bu sum pf weights, sum might be 0
 
         return weightedMean1 - weightedMean2;
     }

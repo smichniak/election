@@ -2,10 +2,11 @@ import java.util.List;
 
 public class Voter extends Person {
     protected District district;
-    protected String partyName; //Null is any party
-    private Candidate votedFor;
     //TODO
     //May require to be initialized with null
+    private Candidate votedFor;
+    protected String partyName; //Null is any party
+
     public Voter(String name, String surname, District district, String partyName) {
         super(name, surname);
         this.district = district;

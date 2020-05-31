@@ -2,3 +2,5 @@
 .idea/
 
 election.iml
+
+out/production/election/

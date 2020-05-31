@@ -1,19 +1,31 @@
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
 public class District {
     private int districtNumber;
+    private int numberOfVoters;
     private Map<String, List<Candidate>> partyLists;
     private Map<String, Integer> votes;
 
-    public District(int districtNumber, Map<String, List<Candidate>> partyLists) {
+    public District(int districtNumber, int numberOfVoters) {
         this.districtNumber = districtNumber;
-        this.partyLists = partyLists;
+        this.numberOfVoters = numberOfVoters;
+        this.partyLists = new HashMap<>();
+        this.votes = new HashMap<>();
     }
 
-    private int getDistrictNumber() {
+    public int getDistrictNumber() {
         return districtNumber;
+    }
+
+    public int getNumberOfVoters() {
+        return numberOfVoters;
+    }
+
+    public void addCandidate(String partyName, Candidate candidate) {
+        partyLists.get(partyName).add(candidate);
     }
 
     public List<Candidate> getCandidates(String partyName) {

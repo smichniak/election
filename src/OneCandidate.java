@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class OneCandidate extends Voter {
@@ -10,7 +11,7 @@ public class OneCandidate extends Voter {
     }
 
     @Override
-    public Candidate chooseCandidate() {
-        return candidate;
+    protected List<Candidate> possibleCandidates() {
+        return new ArrayList<>(List.of(candidate));
     }
 }
