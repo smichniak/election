@@ -18,7 +18,18 @@ public class Campaign {
     }
 
     public void run() {
-
+        for (Voter voter : district.getVoters()) {
+            voter.changeWeights(traitChangeVector);
+        }
     }
+
+    public int possibleChange(Party party) {
+        int change = 0;
+        for (Voter voter : district.getVoters()) {
+            change += voter.possibleChange(traitChangeVector, party);
+        }
+        return change;
+    }
+
 
 }

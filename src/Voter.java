@@ -28,4 +28,9 @@ public class Voter extends Person {
         return votedFor;
     }
 
+    public void changeWeights(int[] changeVector) {}
+
+    public int possibleChange(int[] changeVector, Party party) {
+        return 0;
+    }
 }

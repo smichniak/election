@@ -5,15 +5,23 @@ import java.util.ArrayList;
 
 public class District {
     private int districtNumber;
-    private int numberOfVoters;
+    private List<Voter> voters;
     private Map<String, List<Candidate>> partyLists;
     private Map<String, Integer> votes;
 
     public District(int districtNumber, int numberOfVoters) {
         this.districtNumber = districtNumber;
-        this.numberOfVoters = numberOfVoters;
+        this.voters = new ArrayList<>();
         this.partyLists = new HashMap<>();
         this.votes = new HashMap<>();
+    }
+
+    public void addVoter(Voter voter) {
+        voters.add(voter);
+    }
+
+    public List<Voter> getVoters() {
+        return voters;
     }
 
     public int getDistrictNumber() {
@@ -21,7 +29,7 @@ public class District {
     }
 
     public int getNumberOfVoters() {
-        return numberOfVoters;
+        return voters.size();
     }
 
     public void addCandidate(String partyName, Candidate candidate) {
@@ -46,6 +54,7 @@ public class District {
                 partyLists.get(partyName).add(candidate);
             }
         }
+        voters.addAll(district.voters);
     }
 
     public void countVotes() {

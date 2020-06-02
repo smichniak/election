@@ -28,12 +28,8 @@ public class Candidate extends Person {
         votes++;
     }
 
-    public void resetVotes() {
-        votes = 0;
-    }
-
     public int traitValue(int trait) {
-        return traits[trait-1];
+        return traits[trait];
     }
 
 
