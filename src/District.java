@@ -8,6 +8,8 @@ public class District {
     private List<Voter> voters;
     private Map<String, List<Candidate>> partyLists;
     private Map<String, Integer> votes;
+    private Map<String, Integer> mandates;
+
 
     public District(int districtNumber, int numberOfVoters) {
         this.districtNumber = districtNumber;

@@ -22,6 +22,7 @@ public class Voter extends Person {
         java.util.Random randomGenerator = new java.util.Random();
         int randomIndex = randomGenerator.nextInt(candidates.size());
         votedFor = candidates.get(randomIndex);
+        votedFor.vote();
     }
 
     public Candidate getVotedFor() {

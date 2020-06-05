@@ -10,5 +10,9 @@ public abstract class Party {
         return name;
     }
 
+    public void addMandates(int mandates) {
+        this.mandates += mandates;
+    }
+
     public abstract boolean runCampaign(List<Campaign> campaigns);
 }
