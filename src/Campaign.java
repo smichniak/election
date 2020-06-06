@@ -1,4 +1,4 @@
-public class Campaign {
+public class Campaign implements Comparable<Campaign> {
     private int[] traitChangeVector;
     private District district;
     private int cost;
@@ -32,4 +32,8 @@ public class Campaign {
     }
 
 
+    @Override
+    public int compareTo(Campaign campaign) {
+        return this.cost - campaign.cost;
+    }
 }

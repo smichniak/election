@@ -1,12 +1,10 @@
 public class Candidate extends Person {
-    private Party party;
     private int position;
     private int[] traits;
     private int votes;
 
-    public Candidate(String name, String surname, Party party, int position, int[] traits) {
+    public Candidate(String name, String surname, int position, int[] traits) {
         super(name, surname);
-        this.party = party;
         this.position = position;
         this.traits = traits;
         this.votes = 0;

@@ -4,10 +4,10 @@ import java.util.List;
 public class OneCandidate extends Voter {
     private Candidate candidate;
 
-    public OneCandidate(String name, String surname, District district, String partyName, int candidatePosition) {
-        super(name, surname, district, partyName);
+    public OneCandidate(String name, String surname, District district, Party party, int position) {
+        super(name, surname, district, party);
         List<Candidate> candidates = possibleCandidates();
-        candidate =  candidates.get(candidatePosition - 1);
+        candidate =  candidates.get(position - 1);
     }
 
     @Override

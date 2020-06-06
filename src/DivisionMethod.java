@@ -4,10 +4,10 @@ public abstract class DivisionMethod extends MandateDistribution {
 
     protected abstract int step();
 
-    private int getMaxValue(Map<String, Integer> votes, Map<String, Integer> mandatesByParty) {
+    private int getMaxValue(Map<Party, Integer> votes, Map<Party, Integer> mandatesByParty) {
         int maxValue = 0;
-        for (String partyName : votes.keySet()) {
-            int currentValue = votes.get(partyName) / (step() * mandatesByParty.getOrDefault(partyName, 0) + 1);
+        for (Party party : votes.keySet()) {
+            int currentValue = votes.get(party) / (step() * mandatesByParty.getOrDefault(party, 0) + 1);
             if (currentValue > maxValue) {
                 maxValue = currentValue;
             }
@@ -17,16 +17,16 @@ public abstract class DivisionMethod extends MandateDistribution {
     }
 
     @Override
-    public Map<String, Integer> mandates(Map<String, Integer> votes, int mandatesCount) {
-        Map<String, Integer> mandatesByParty = new HashMap<>();
-        List<String> sameValue = new ArrayList<>();
+    public Map<Party, Integer> mandates(Map<Party, Integer> votes, int mandatesCount) {
+        Map<Party, Integer> mandatesByParty = new HashMap<>();
+        List<Party> sameValue = new ArrayList<>();
         int value = getMaxValue(votes, mandatesByParty);
 
         while (mandatesCount > 0) {
-            for (String partyName : votes.keySet()) {
-                int currentValue = votes.get(partyName) / (step() * mandatesByParty.getOrDefault(partyName, 0) + 1);
+            for (Party party : votes.keySet()) {
+                int currentValue = votes.get(party) / (step() * mandatesByParty.getOrDefault(party, 0) + 1);
                 if (currentValue == value) {
-                    sameValue.add(partyName);
+                    sameValue.add(party);
                 }
             }
             Collections.shuffle(sameValue);
@@ -34,6 +34,7 @@ public abstract class DivisionMethod extends MandateDistribution {
                 mandatesByParty.put(sameValue.get(0), mandatesByParty.getOrDefault(sameValue.get(0), 0) + 1);
                 sameValue.remove(0);
                 mandatesCount--;
+                sameValue.get(0).addMandates(1);
             }
             value = getMaxValue(votes, mandatesByParty);
         }

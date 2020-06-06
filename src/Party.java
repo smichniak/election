@@ -5,6 +5,12 @@ public abstract class Party {
     protected int budget;
     private int mandates;
 
+    public Party(String name, int budget) {
+        this.name = name;
+        this.budget = budget;
+        this.mandates = 0;
+    }
+
     @Override
     public String toString() {
         return name;

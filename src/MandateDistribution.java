@@ -2,7 +2,7 @@ import java.util.Map;
 
 public abstract class MandateDistribution {
 
-    public abstract Map<String, Integer> mandates(Map<String, Integer> votes, int mandatesCount);
+    public abstract Map<Party, Integer> mandates(Map<Party, Integer> votes, int mandatesCount);
 
 
 }

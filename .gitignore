@@ -4,3 +4,7 @@
 election.iml
 
 out/production/election/
+
+.DS_Store
+
+parse.txt

@@ -2,6 +2,10 @@ import java.util.List;
 
 public class GreedyParty extends Party {
 
+    public GreedyParty(String name, int budget) {
+        super(name, budget);
+    }
+
     @Override
     public boolean runCampaign(List<Campaign> campaigns) {
         if (budget < campaigns.get(0).getCost()) {

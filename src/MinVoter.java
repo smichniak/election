@@ -1,8 +1,8 @@
 public class MinVoter extends ComparingVoter {
     private int trait;
 
-    public MinVoter(String name, String surname, District district, String partyName, int trait) {
-        super(name, surname, district, partyName);
+    public MinVoter(String name, String surname, District district, Party party, int trait) {
+        super(name, surname, district, party);
         this.trait = trait;
     }
 

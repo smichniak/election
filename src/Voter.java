@@ -2,19 +2,18 @@ import java.util.List;
 
 public class Voter extends Person {
     protected District district;
-    //TODO
-    //May require to be initialized with null
+    // TODO May require to be initialized with null
     private Candidate votedFor;
-    protected String partyName; //Null is any party
+    protected Party party; //Null is any party
 
-    public Voter(String name, String surname, District district, String partyName) {
+    public Voter(String name, String surname, District district, Party party) {
         super(name, surname);
         this.district = district;
-        this.partyName = partyName;
+        this.party = party;
     }
 
     protected List<Candidate> possibleCandidates() {
-        return district.getCandidates(partyName);
+        return district.getCandidates(party);
     }
 
     public void chooseCandidate() {

@@ -1,8 +1,8 @@
 public class MaxVoter extends ComparingVoter {
     private int trait;
 
-    public MaxVoter(String name, String surname, District district, String partyName, int trait) {
-        super(name, surname, district, partyName);
+    public MaxVoter(String name, String surname, District district, Party party, int trait) {
+        super(name, surname, district, party);
         this.trait = trait;
     }
 

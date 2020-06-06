@@ -1,8 +1,8 @@
 public class WeightedVoter extends ComparingVoter {
     private int[] weights;
 
-    public WeightedVoter(String name, String surname, District district, String partyName, int[] weights) {
-        super(name, surname, district, partyName);
+    public WeightedVoter(String name, String surname, District district, Party party, int[] weights) {
+        super(name, surname, district, party);
         this.weights = weights;
     }
 
@@ -29,8 +29,8 @@ public class WeightedVoter extends ComparingVoter {
         }
     }
 
-    //TODO
-    //Merege above an below functions
+    // TODO
+    // Merege above an below functions
     @Override
     public int possibleChange(int[] changeVector, Party party) {
         int sumChange = 0;
@@ -40,7 +40,7 @@ public class WeightedVoter extends ComparingVoter {
             int newWeights = weights[i] += changeVector[i];
             changedWeights[i] = Math.max(-100, Math.min(100, newWeights));
         }
-        for (Candidate candidate : district.getCandidates(party.toString())) {
+        for (Candidate candidate : district.getCandidates(party)) {
             sumChange += candidateSum(candidate, changedWeights) - candidateSum(candidate, weights);
         }
         return sumChange;
