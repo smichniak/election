@@ -32,9 +32,9 @@ public abstract class DivisionMethod extends MandateDistribution {
             Collections.shuffle(sameValue);
             while (sameValue.size() > 0 && mandatesCount > 0) {
                 mandatesByParty.put(sameValue.get(0), mandatesByParty.getOrDefault(sameValue.get(0), 0) + 1);
-                sameValue.remove(0);
-                mandatesCount--;
                 sameValue.get(0).addMandates(1);
+                mandatesCount--;
+                sameValue.remove(0);
             }
             value = getMaxValue(votes, mandatesByParty);
         }

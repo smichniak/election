@@ -11,6 +11,10 @@ public abstract class Party {
         this.mandates = 0;
     }
 
+    public int getMandates() {
+        return mandates;
+    }
+
     @Override
     public String toString() {
         return name;

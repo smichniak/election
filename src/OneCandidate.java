@@ -6,7 +6,7 @@ public class OneCandidate extends Voter {
 
     public OneCandidate(String name, String surname, District district, Party party, int position) {
         super(name, surname, district, party);
-        List<Candidate> candidates = possibleCandidates();
+        List<Candidate> candidates = district.getCandidates(party);
         candidate =  candidates.get(position - 1);
     }
 

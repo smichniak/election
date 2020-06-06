@@ -28,18 +28,43 @@ public class Main {
 //
 //
 //        Map<Party, Integer> votes = new HashMap<>(Map.of(partyA, 720, partyB, 300, partyC, 480));
-//        MandateDistribution mandate1 = new DHondt();
+//
 //        MandateDistribution mandate2 = new SainteLague();
 //        MandateDistribution mandate3 = new HareNiemeyer();
 //        System.out.println(mandate1.mandates(votes, 8));
 //        System.out.println(mandate2.mandates(votes, 8));
 //        System.out.println(mandate3.mandates(votes, 8));
+        MandateDistribution mandate1 = new DHondt();
         try {
             Parser parser = new Parser(args[0]);
             parser.parseInput();
+            Party[] parties = parser.getParties();
+            List<District> districts = parser.getDistricts();
+            List<Campaign> campaigns = parser.getCampaigns();
+
+            for (Party party : parties) {
+                while (party.runCampaign(campaigns));
+            }
+            for (District district : districts) {
+                for (Voter voter : district.getVoters()) {
+                    voter.chooseCandidate();
+                }
+                district.countVotes();
+                district.distributeMandates(mandate1);
+            }
+
+            for (Party party : parties) {
+                System.out.println(party.getMandates());
+            }
+
+
+
+
+
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
+
 
 
     }

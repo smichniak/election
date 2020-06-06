@@ -27,7 +27,7 @@ public class Candidate extends Person {
     }
 
     public int traitValue(int trait) {
-        return traits[trait];
+        return traits[trait-1];
     }
 
 

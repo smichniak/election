@@ -8,8 +8,8 @@ public class WeightedVoter extends ComparingVoter {
 
     private int candidateSum(Candidate candidate, int[] weights) {
         int weightedSum = 0;
-        for (int i = 0; i < weights.length; ++i) {
-            weightedSum += weights[i] * candidate.traitValue(i);
+        for (int i = 1; i <= weights.length; ++i) {
+            weightedSum += weights[i-1] * candidate.traitValue(i);
         }
         return weightedSum;
     }

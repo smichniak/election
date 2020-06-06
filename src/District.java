@@ -36,6 +36,9 @@ public class District {
         return numberOfVoters;
     }
 
+    public void addParty(Party party) {
+        partyLists.put(party, new ArrayList<>());
+    }
     public void addCandidate(Party party, Candidate candidate) {
         partyLists.get(party).add(candidate);
     }
