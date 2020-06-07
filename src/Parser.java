@@ -159,16 +159,15 @@ public class Parser {
         for (int i = 0; i < numberOfPairs; ++i) {
             int first = stringScanner.nextInt();
             int second = stringScanner.nextInt();
-            districts.get(first-1).merge(districts.get(second-1));
+            districts.get(first - 1).merge(districts.get(second - 1));
             toRemove.add(second);
         }
         Collections.reverse(toRemove);
         for (int district : toRemove) {
-            districts.remove(district-1);
+            districts.remove(district - 1);
         }
 
     }
-
 
     public void parseInput() {
         int numberOfDistricts = scanner.nextInt();

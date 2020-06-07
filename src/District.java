@@ -36,6 +36,14 @@ public class District {
         return numberOfVoters;
     }
 
+    public List<Candidate> getPartyList(Party party) {
+        return partyLists.get(party);
+    }
+
+    public int getMandates(Party party) {
+        return mandates.get(party);
+    }
+
     public void addParty(Party party) {
         partyLists.put(party, new ArrayList<>());
     }
