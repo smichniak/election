@@ -1,3 +1,7 @@
+package parties;
+
+import main.Person;
+
 public class Candidate extends Person {
     private int position;
     private int[] traits;
@@ -27,7 +31,7 @@ public class Candidate extends Person {
     }
 
     public int traitValue(int trait) {
-        return traits[trait-1];
+        return traits[trait];
     }
 
 

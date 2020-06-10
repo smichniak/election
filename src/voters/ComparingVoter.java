@@ -1,5 +1,10 @@
+package voters;
+
 import java.util.ArrayList;
 import java.util.List;
+import main.District;
+import parties.Candidate;
+import parties.Party;
 
 
 public abstract class ComparingVoter extends Voter {
@@ -7,7 +12,10 @@ public abstract class ComparingVoter extends Voter {
         super(name, surname, district, party);
     }
 
+    // Zwraca wartość > 0, jeśli `candidate1` jest lepszy niż `candidate2`,
+    // < 0 w przeciwnym przypadku, i 0 gdy są na równi
     protected abstract int compare(Candidate candidate1, Candidate candidate2);
+
 
     @Override
     protected List<Candidate> possibleCandidates() {

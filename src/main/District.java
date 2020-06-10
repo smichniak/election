@@ -1,7 +1,11 @@
+package main;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import parties.*;
+import voters.*;
 
 public class District {
     private int districtNumber;
@@ -33,7 +37,8 @@ public class District {
     }
 
     public int getNumberOfVoters() {
-        return numberOfVoters;
+        // Liczbę wyborców w okręgu dostajemy na początku, ale może się ona zmienić przy scalaniu okręgów
+        return Math.max(numberOfVoters, voters.size());
     }
 
     public List<Candidate> getPartyList(Party party) {
@@ -47,12 +52,13 @@ public class District {
     public void addParty(Party party) {
         partyLists.put(party, new ArrayList<>());
     }
+
     public void addCandidate(Party party, Candidate candidate) {
         partyLists.get(party).add(candidate);
     }
 
     public List<Candidate> getCandidates(Party party) {
-        if (party == null) {
+        if (party == null) { // Null oznacza kandydatów z dowolnej partii
             List<Candidate> candidates = new ArrayList<>();
             partyLists.values().forEach(candidates::addAll);
             return candidates;
@@ -65,6 +71,7 @@ public class District {
         for (Party party : district.partyLists.keySet()) {
             int candidates = partyLists.get(party).size();
             for (Candidate candidate : district.partyLists.get(party)) {
+                // Przy scalaniu okręgów dopisujemy kandydatów z drugiego na koniec listy pierwszego okręgu
                 candidate.setPosition(candidate.getPosition() + candidates);
                 partyLists.get(party).add(candidate);
             }
@@ -81,7 +88,8 @@ public class District {
     }
 
     public void distributeMandates(MandateDistribution method) {
-        mandates = method.mandates(votes, voters.size() / 10);
+        // Mandatów rodzielamy 10 razy mniej niż jest głosujących
+        mandates = method.mandates(votes, getNumberOfVoters() / 10);
     }
 
 

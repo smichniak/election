@@ -1,9 +1,15 @@
+package voters;
+
+import main.District;
+import parties.Candidate;
+import parties.Party;
+
 public class MaxVoter extends ComparingVoter {
     private int trait;
 
     public MaxVoter(String name, String surname, District district, Party party, int trait) {
         super(name, surname, district, party);
-        this.trait = trait;
+        this.trait = trait-1;
     }
 
     @Override

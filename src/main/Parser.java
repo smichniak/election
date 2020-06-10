@@ -1,6 +1,15 @@
+package main;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.Scanner;
+import voters.*;
+import parties.*;
 
 public class Parser {
     private Scanner scanner;
@@ -9,9 +18,14 @@ public class Parser {
     private List<District> districts;
     private List<Campaign> campaigns;
 
-    public Parser(String directory) throws FileNotFoundException {
-        File inputFile = new File(directory);
-        scanner = new Scanner(inputFile);
+    public Parser(String directory) {
+        try {
+            File inputFile = new File(directory);
+            scanner = new Scanner(inputFile);
+        } catch (FileNotFoundException e) {
+            System.err.println("Nie znaleziono pliku \"" + directory + "\"");
+            System.exit(1);
+        }
     }
 
     public Party[] getParties() {
@@ -69,6 +83,7 @@ public class Parser {
 
     }
 
+    // Zwraca tablicę wag lub wartości chech, jej rozmiar zależny jest od liczby tych parametrów
     private int[] getTraitsWeights(int numberOfTraits) {
         int[] traits = new int[numberOfTraits];
         for (int i = 0; i < numberOfTraits; ++i) {
@@ -83,9 +98,9 @@ public class Parser {
                 for (int position = 1; position <= district.getNumberOfVoters() / 10; ++position) {
                     String name = scanner.next();
                     String surname = scanner.next();
-                    scanner.nextInt(); // District number, useless
-                    scanner.next(); // Party name, useless
-                    scanner.nextInt(); // Position, useless
+                    scanner.nextInt(); // Znamy już okręg kandydata, nie musimy go zczytywać
+                    scanner.next(); // Znamy już partię kandydata
+                    scanner.nextInt(); // Znamy już numer na liście kandydata
                     int[] traits = getTraitsWeights(numberOfTraits);
                     Candidate candidate = new Candidate(name, surname, position, traits);
                     district.addCandidate(party, candidate);
@@ -98,10 +113,10 @@ public class Parser {
         for (District district : districts) {
             for (int i = 0; i < district.getNumberOfVoters(); ++i) {
                 Voter voter;
-                Party party = null;
+                Party party = null; // Partia `null` oznacza, że wyborca nie ma preferencji partyjnych
                 String name = scanner.next();
                 String surname = scanner.next();
-                scanner.nextInt(); // District number, useless
+                scanner.nextInt(); // Znamy już okręg wyborcy
                 int type = scanner.nextInt();
 
                 if (type == 1) {
@@ -111,26 +126,23 @@ public class Parser {
                     party = parties[partiesNames.get(scanner.next())];
                     int position = scanner.nextInt();
                     voter = new OneCandidate(name, surname, district, party, position);
-                } else if (type == 3) {
+                } else if (type == 3 || type == 6) {
                     int trait = scanner.nextInt();
+                    if (type == 6) {
+                        party = parties[partiesNames.get(scanner.next())];
+                    }
                     voter = new MinVoter(name, surname, district, party, trait);
-                } else if (type == 4) {
+                } else if (type == 4 || type == 7) {
                     int trait = scanner.nextInt();
-                    voter = new MaxVoter(name, surname, district, party, trait);
-                } else if (type == 5) {
-                    int[] weights = getTraitsWeights(numberOfTraits);
-                    voter = new WeightedVoter(name, surname, district, party, weights);
-                } else if (type == 6) {
-                    int trait = scanner.nextInt();
-                    party = parties[partiesNames.get(scanner.next())];
-                    voter = new MinVoter(name, surname, district, party, trait);
-                } else if (type == 7) {
-                    int trait = scanner.nextInt();
-                    party = parties[partiesNames.get(scanner.next())];
+                    if (type == 7) {
+                        party = parties[partiesNames.get(scanner.next())];
+                    }
                     voter = new MaxVoter(name, surname, district, party, trait);
                 } else {
                     int[] weights = getTraitsWeights(numberOfTraits);
-                    party = parties[partiesNames.get(scanner.next())];
+                    if (type == 8) {
+                        party = parties[partiesNames.get(scanner.next())];
+                    }
                     voter = new WeightedVoter(name, surname, district, party, weights);
                 }
                 district.addVoter(voter);
@@ -141,15 +153,12 @@ public class Parser {
     private void generateCampaigns(int numberOfCampaigns, int numberOfTraits) {
         campaigns = new ArrayList<>();
         for (int i = 0; i < numberOfCampaigns; ++i) {
-            int[] traitChange = new int[numberOfTraits];
-            for (int trait = 0; trait < numberOfTraits; ++trait) {
-                traitChange[trait] = scanner.nextInt();
-            }
+            int[] traitChange = getTraitsWeights(numberOfTraits);
             for (District district : districts) {
                 campaigns.add(new Campaign(traitChange, district));
             }
         }
-        Collections.sort(campaigns);
+        Collections.sort(campaigns); // Sortujemy działania niemalejąco po koszcie
     }
 
     private void mergeDistricts(int numberOfPairs, String toMerge) {
@@ -160,13 +169,13 @@ public class Parser {
             int first = stringScanner.nextInt();
             int second = stringScanner.nextInt();
             districts.get(first - 1).merge(districts.get(second - 1));
-            toRemove.add(second);
+            toRemove.add(second); // Checmy usunąć okręgi o większym numerze
         }
+        // Usuwamy okręgi od największych indeksów, by te o mniejszym nie zmieniły miejsca na liście
         Collections.reverse(toRemove);
         for (int district : toRemove) {
             districts.remove(district - 1);
         }
-
     }
 
     public void parseInput() {
@@ -176,7 +185,7 @@ public class Parser {
         int numberOfTraits = scanner.nextInt();
         int numberOfPairs = scanner.nextInt();
 
-        String toMerge = scanner.nextLine();
+        String toMerge = scanner.nextLine(); // Linia wejścia opsiująca okręgi do połączenia
 
         generateParties(numberOfParties);
         generateDistricts(numberOfDistricts);
@@ -184,7 +193,28 @@ public class Parser {
         generateVoters(numberOfTraits);
         generateCampaigns(numberOfCampaigns, numberOfTraits);
         mergeDistricts(numberOfPairs, toMerge);
-
-
     }
+
+    public void printResults(MandateDistribution method) {
+        System.out.println(method);
+        for (District district : districts) {
+            System.out.println(district.getDistrictNumber());
+            for (Voter voter : district.getVoters()) {
+                System.out.println(voter.toString() + " " + voter.getVotedFor().toString());
+            }
+            for (Party party : parties) {
+                for (Candidate candidate : district.getPartyList(party)) {
+                    System.out.println(candidate.toString() + " " + party.toString() + " " + candidate.getPosition() + " " + candidate.getVotes());
+                }
+            }
+            for (Party party : parties) {
+                System.out.println(party.toString() + " " + district.getMandates(party));
+            }
+        }
+        System.out.println("W sumie: ");
+        for (Party party : parties) {
+            System.out.println(party.toString() + " " + party.getMandates());
+        }
+    }
+
 }

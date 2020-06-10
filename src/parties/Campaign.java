@@ -1,3 +1,8 @@
+package parties;
+
+import main.District;
+import voters.Voter;
+
 public class Campaign implements Comparable<Campaign> {
     private int[] traitChangeVector;
     private District district;
@@ -30,7 +35,6 @@ public class Campaign implements Comparable<Campaign> {
         }
         return change;
     }
-
 
     @Override
     public int compareTo(Campaign campaign) {

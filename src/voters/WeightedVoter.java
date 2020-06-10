@@ -1,3 +1,9 @@
+package voters;
+
+import main.District;
+import parties.Candidate;
+import parties.Party;
+
 public class WeightedVoter extends ComparingVoter {
     private int[] weights;
 
@@ -6,10 +12,11 @@ public class WeightedVoter extends ComparingVoter {
         this.weights = weights;
     }
 
+    // Suma ważona cech dantego kandydata
     private int candidateSum(Candidate candidate, int[] weights) {
         int weightedSum = 0;
-        for (int i = 1; i <= weights.length; ++i) {
-            weightedSum += weights[i-1] * candidate.traitValue(i);
+        for (int i = 0; i < weights.length; ++i) {
+            weightedSum += weights[i] * candidate.traitValue(i);
         }
         return weightedSum;
     }
@@ -29,8 +36,6 @@ public class WeightedVoter extends ComparingVoter {
         }
     }
 
-    // TODO
-    // Merege above an below functions
     @Override
     public int possibleChange(int[] changeVector, Party party) {
         int sumChange = 0;
@@ -41,6 +46,7 @@ public class WeightedVoter extends ComparingVoter {
             changedWeights[i] = Math.max(-100, Math.min(100, newWeights));
         }
         for (Candidate candidate : district.getCandidates(party)) {
+            // Zmiana sum ważonych dla każdego kandydata w danej partii
             sumChange += candidateSum(candidate, changedWeights) - candidateSum(candidate, weights);
         }
         return sumChange;

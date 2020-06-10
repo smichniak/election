@@ -1,3 +1,5 @@
+package parties;
+
 import java.util.List;
 
 public abstract class Party {
@@ -24,5 +26,8 @@ public abstract class Party {
         this.mandates += mandates;
     }
 
+    // Zwraca false, jeśli partię nie stać już na żadne działanie,
+    // w przecinym przypadku zwraca true i wykonuje to działanie
     public abstract boolean runCampaign(List<Campaign> campaigns);
+
 }

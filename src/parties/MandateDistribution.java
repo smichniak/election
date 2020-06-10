@@ -1,3 +1,5 @@
+package parties;
+
 import java.util.Map;
 
 public abstract class MandateDistribution {
