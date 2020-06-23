@@ -95,10 +95,10 @@ argumentem programu). Format pliku wejściowego:
 
 
 * pierwszy wiersz zawiera cztery liczby oddzielone spacją, są to kolejno:
-  * `n` - liczba podstawowych okręgów wyborczych (ze zbioru {5,6, ..., 100})
-  * `p` - liczba partii (ze zbioru {1,2,...,20})
-  * `d` - liczba możliwych działań (ze zbioru {1,2,3,...,15})
-  * `c` - liczba cech kandydatów (ze zbioru {5,6,7,...,100})
+  * `n` - liczba podstawowych okręgów wyborczych (ze zbioru `{5,6, ..., 100}`)
+  * `p` - liczba partii (ze zbioru `{1,2,...,20}`)
+  * `d` - liczba możliwych działań (ze zbioru `{1,2,3,...,15}`)
+  * `c` - liczba cech kandydatów (ze zbioru `{5,6,7,...,100}`)
 * drugi wiersz zawiera liczbę par podstawowych okręgów wyborczych, które należy
 scalić (jest to liczba ze zbioru `{0,1,....,⌊n/2⌋}`), a następnie (po spacji) tyle właśnie par
 postaci `(o,o+1)`, gdzie `o` i `o+1` to identyfikatory okręgów (liczby ze zbioru `{1,2,3,....,n}`),
@@ -110,7 +110,7 @@ wyrazem, a nazwy są oddzielone spacją)
 * czwarty wiersz zawiera `p` liczb `b1, b2, ..., bp`, określających budżety poszczególnych
 partii, mogą być to dowolne dodatnie liczby całkowite (mieszczące się w granicy
 zakresu Integer), kolejność jest taka sama jak w wierszu powyżej
-* piąty wiersz składa się z p znaków (oddzielonych spacjami) ze zbioru `{’R’,’S’,’W’,’Z’}`,
+* piąty wiersz składa się z `p` znaków (oddzielonych spacjami) ze zbioru `{’R’,’S’,’W’,’Z’}`,
 odpowiadających strategiom poszczególnych partii (kolejność jest taka sama jak w
 wierszu powyżej):
   * `‘R’` - partia działa “z rozmachem”
